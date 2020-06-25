@@ -10,8 +10,9 @@ state = st.multiselect("Choose State", list(set(df['State/UnionTerritory'])), ["
 #     st.error("Select at least one State")
 
 for s in state:
-    selected = df.loc[df['State/UnionTerritory'] == s]
+    st.write(f'''## {s} ''')
+    selected = df.loc[df['State/UnionTerritory'] == s, ['Date', 'Confirmed']]
     st.write(selected)
-    data = pd.DataFrame()
-
-    st.bar_chart(selected['Confirmed'])
+    selected = selected.rename(columns={'Date':'index'}).set_index('index')
+    st.write(selected)
+    st.bar_chart(selected)
