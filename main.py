@@ -1,5 +1,4 @@
 import pandas as pd
-import altair as alt
 import streamlit as st
 from matplotlib import pyplot as plt
 import matplotlib.ticker as ticker
@@ -15,8 +14,8 @@ total_data = retrieve_total()
 st.text(f'''Confirmed : {total_data['confirmed']}''')
 st.text(f'''Active : {total_data['active']}''')
 st.text(f'''Deaths : {total_data['deaths']}''')
+st.text(f'''Recovered : {total_data['recovered']}''')
         
-
 st.markdown('## State Data')
 
 active_data = retrieve_state()
