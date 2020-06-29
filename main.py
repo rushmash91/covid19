@@ -4,14 +4,25 @@ import streamlit as st
 from matplotlib import pyplot as plt
 import matplotlib.ticker as ticker
 from matplotlib.pyplot import figure
-from active_cases import retrieve
+from active_cases import retrieve_state
+from active_cases import retrieve_total
 
 st.title('Covid-19 in India')
 df = st.cache(pd.read_csv)('./Data/covid_19_india.csv')
-active_data = retrieve()
-st.dataframe(active_data)
 
-state = st.multiselect("Choose State", list(set(df['State/UnionTerritory'])), ["Kerala", "Delhi"])
+total_data = retrieve_total()
+
+st.text(f'''Confirmed : {total_data['confirmed']}''')
+st.text(f'''Active : {total_data['active']}''')
+st.text(f'''Deaths : {total_data['deaths']}''')
+        
+
+st.markdown('## State Data')
+
+active_data = retrieve_state()
+# st.dataframe(active_data)
+
+state = st.multiselect("Choose State", sorted(list(set(df['State/UnionTerritory']))), ["Kerala", "Delhi"])
 
 if not state:
     st.error("Select at least one State")
@@ -26,11 +37,11 @@ if is_check:
         selected = df.loc[df['State/UnionTerritory'] == s,  ['Date', 'Confirmed', 'Deaths', 'Cured']]
         selected_active = active_data.loc[active_data['state'] == s]
 
-        st.text(f'''Active : {selected_active.active.item()}''')
         st.text(f'''Confirmed : {selected_active.confirmed.item()}''')
+        st.text(f'''Active : {selected_active.active.item()}''')
         st.text(f'''Deaths : {selected_active.deaths.item()}''')
         
-        st.dataframe(selected)
+        # st.dataframe(selected)
         
         x = selected['Date']
         y = selected['Confirmed']
