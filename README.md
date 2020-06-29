@@ -6,4 +6,4 @@
 - State wise distribution
 - Time Series of Confirmed cases, Active cases and Deaths in each State/Union territory  
 
-[**api used for data:**](https://api.covid19india.org/)
+**api used for data:** [Covid-19 India](https://api.covid19india.org/)
