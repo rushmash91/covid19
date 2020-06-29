@@ -4,6 +4,7 @@ import streamlit as st
 from matplotlib import pyplot as plt
 import matplotlib.ticker as ticker
 from matplotlib.pyplot import figure
+from active_cases import retrieve
 
 df = st.cache(pd.read_csv)('./Data/covid_19_india.csv')
 
