@@ -3,13 +3,35 @@ import streamlit as st
 from matplotlib import pyplot as plt
 import matplotlib.ticker as ticker
 from matplotlib.pyplot import figure
-from active_cases import retrieve_state
-from active_cases import retrieve_total
+from active_cases import retrieve_state, retrieve_total, total_timeseries
 
 st.title('Covid-19 in India')
+st.text("")
+st.text("")
+st.text("")
 df = st.cache(pd.read_csv)('./Data/covid_19_india.csv')
 
 total_data = retrieve_total()
+total_timeseries = total_timeseries()
+
+x = total_timeseries['date']
+y = total_timeseries['totalconfirmed']
+
+figure(num=None, figsize=(14, 8), dpi=80, facecolor='w', edgecolor='k')
+plt.xticks(rotation=45)
+ax = plt.axes()
+ax.xaxis.set_major_locator(ticker.MultipleLocator(10))
+ax.xaxis.set_minor_locator(ticker.MultipleLocator(1))
+ax.yaxis.set_major_locator(ticker.MultipleLocator(10))
+ax.yaxis.set_minor_locator(ticker.MultipleLocator(1))
+
+plt.plot(x, y, label='Confirmed Total Cases')
+
+plt.xlabel('Date')
+plt.ylabel('No. of Cases')
+plt.title(f'Detected Covid-19 Cases in India')
+plt.legend()
+st.pyplot()
 
 st.text(f'''Confirmed : {total_data['confirmed']}''')
 st.text(f'''Active : {total_data['active']}''')
@@ -53,7 +75,7 @@ if is_check:
         ax.xaxis.set_major_locator(ticker.MultipleLocator(10))
         ax.xaxis.set_minor_locator(ticker.MultipleLocator(1))
 
-        plt.plot(x, y, label='Confirmed New Cases')
+        plt.plot(x, y, label='Confirmed Total Cases')
         plt.plot(x, y2, label='Deaths')
         plt.plot(x, y3, label='Cured')
 
